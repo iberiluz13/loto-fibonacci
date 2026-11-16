@@ -138,5 +138,5 @@ $("exportJson").addEventListener("click",()=>download("loto-fibonacci-backup.jso
 $("importBtn").addEventListener("click",()=>$("file").click());
 $("file").addEventListener("change",async e=>{const file=e.target.files[0];if(!file)return;try{importRecords(await file.text(),file.name)}catch(err){$("status").textContent=err.message}e.target.value=""});
 ensureInputs(6);sync();
-if("serviceWorker" in navigator && location.protocol!=="file:")navigator.serviceWorker.register("./sw.js").catch(()=>{});
+if("serviceWorker" in navigator && location.protocol!=="file:")navigator.serviceWorker.register("./sw.js", {updateViaCache:"none"}).then(reg=>reg.update()).catch(()=>{});
 </script></body></html>
