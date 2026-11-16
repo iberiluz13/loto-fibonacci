@@ -1,0 +1,9 @@
+LOTO FIBONACCI — APP LOCAL
+
+Abra index.html no computador para testar. Para instalar como aplicativo no Android/iPhone, hospede os arquivos em um endereço HTTPS ou servidor local adequado. A instalação PWA e o funcionamento offline exigem HTTPS (ou localhost).
+
+Os dados ficam no armazenamento do navegador. Faça backup JSON ou CSV regularmente.
+
+A importação disponível nesta versão é CSV/JSON, não XLSX diretamente. Para usar a planilha Excel, exporte seus concursos no formato CSV com as colunas loteria,concurso,sorteio,d1,d2,d3,d4,d5,d6.
+
+O aplicativo é uma ferramenta de análise matemática, não de previsão de sorteios.
