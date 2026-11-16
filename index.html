@@ -3,13 +3,13 @@
 <meta name="theme-color" content="#122b4a"><meta name="apple-mobile-web-app-capable" content="yes">
 <title>Loto Fibonacci</title><link rel="manifest" href="./manifest.webmanifest">
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#172b43;background:#eef3f8}*{box-sizing:border-box}body{margin:0}header{background:#122b4a;color:white;padding:18px 16px 16px}header h1{font-size:23px;margin:0}header p{font-size:12px;opacity:.8;margin:4px 0 0}main{max-width:950px;margin:auto;padding:14px 12px 80px}.panel{background:white;border-radius:16px;padding:15px;margin:0 0 13px;box-shadow:0 2px 10px #152a4510}h2{font-size:17px;margin:0 0 12px}h3{font-size:14px;margin:16px 0 8px}.muted{color:#60738b;font-size:12px}label{font-size:12px;font-weight:700;display:block;margin-bottom:5px}input,select,button{font:inherit;border-radius:9px;padding:11px;border:1px solid #c8d5e3;min-width:0}input,select{background:white;width:100%}button{background:#153e68;color:white;border:0;font-weight:650;cursor:pointer}button.secondary{background:#e9f1f9;color:#163b61}button.danger{background:#fff0ef;color:#a52d24}.grid{display:grid;gap:8px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.six{grid-template-columns:repeat(6,minmax(0,1fr))}.number{font-size:16px;text-align:center;padding:9px 2px}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}.result{background:#eaf6ed;border:1px solid #b6dec0;border-radius:10px;padding:10px;text-align:center}.result b{font-size:19px}.result small{display:block;color:#56715f}.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;white-space:nowrap;font-size:13px}th,td{padding:9px;border-bottom:1px solid #e5ebf1;text-align:center}th{background:#edf3f9}td b{color:#17633c}.pill{display:inline-block;padding:5px 8px;background:#e8f0f8;border-radius:20px;font-size:12px}.hidden{display:none!important}.note{background:#fff8e5;border-radius:9px;padding:10px;font-size:12px}.line{border-top:1px solid #e2e9f0;margin:12px 0}.footer{font-size:12px;color:#63758b;text-align:center;margin-top:12px}@media(min-width:700px){main{padding:22px}.panel{padding:22px}}
-</style></head><body><header><h1>◈ Loto Fibonacci</h1><p>Matrizes locais · Mega-Sena e Dupla Sena · 3 métodos</p></header>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#172b43;background:#eef3f8}*{box-sizing:border-box}body{margin:0}header{background:#122b4a;color:white;padding:18px 16px 16px}header h1{font-size:23px;margin:0}header p{font-size:12px;opacity:.8;margin:4px 0 0}main{max-width:950px;margin:auto;padding:14px 12px 80px}.panel{background:white;border-radius:16px;padding:15px;margin:0 0 13px;box-shadow:0 2px 10px #152a4510}h2{font-size:17px;margin:0 0 12px}h3{font-size:14px;margin:16px 0 8px}.muted{color:#60738b;font-size:12px}label{font-size:12px;font-weight:700;display:block;margin-bottom:5px}input,select,button{font:inherit;border-radius:9px;padding:11px;border:1px solid #c8d5e3;min-width:0}input,select{background:white;width:100%}button{background:#153e68;color:white;border:0;font-weight:650;cursor:pointer}button.secondary{background:#e9f1f9;color:#163b61}button.danger{background:#fff0ef;color:#a52d24}.grid{display:grid;gap:8px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.six{grid-template-columns:repeat(6,minmax(0,1fr))}.five{grid-template-columns:repeat(5,minmax(0,1fr))}.number{font-size:16px;text-align:center;padding:9px 2px}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}.result{background:#eaf6ed;border:1px solid #b6dec0;border-radius:10px;padding:10px;text-align:center}.result b{font-size:19px}.result small{display:block;color:#56715f}.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;white-space:nowrap;font-size:13px}th,td{padding:9px;border-bottom:1px solid #e5ebf1;text-align:center}th{background:#edf3f9}td b{color:#17633c}.pill{display:inline-block;padding:5px 8px;background:#e8f0f8;border-radius:20px;font-size:12px}.hidden{display:none!important}.note{background:#fff8e5;border-radius:9px;padding:10px;font-size:12px}.line{border-top:1px solid #e2e9f0;margin:12px 0}.footer{font-size:12px;color:#63758b;text-align:center;margin-top:12px}@media(min-width:700px){main{padding:22px}.panel{padding:22px}}
+</style></head><body><header><h1>◈ Loto Fibonacci</h1><p>Matrizes locais · Mega-Sena · Dupla Sena · Lotofácil · 3 métodos</p></header>
 <main>
-<section class="panel"><h2>1. Escolher análise</h2><div class="grid two"><div><label>Loteria</label><select id="lottery"><option value="dupla">Dupla Sena</option><option value="mega">Mega-Sena</option></select></div><div><label>Forma</label><select id="mode"><option value="within">Forma 1 — mesmo concurso</option><option value="between">Forma 2 — concursos diferentes</option></select></div></div><div class="grid two" style="margin-top:10px"><div><label>Concurso principal</label><select id="contestA"></select></div><div><label id="otherLabel">Comparar com</label><select id="contestB"></select></div></div><div class="grid two" style="margin-top:10px"><div><label>Sorteio (Forma 2)</label><select id="draw"><option value="1">1º sorteio</option><option value="2">2º sorteio</option></select></div><div><label>Método exibido</label><select id="method"><option value="all">Todos os métodos</option><option value="m1">Método 1</option><option value="m2">Método 2</option><option value="m3">Método 3</option></select></div></div><p id="compareText" class="muted"></p></section>
+<section class="panel"><h2>1. Escolher análise</h2><div class="grid two"><div><label>Loteria</label><select id="lottery"><option value="dupla">Dupla Sena</option><option value="mega">Mega-Sena</option><option value="lotofacil">Lotofácil</option></select></div><div><label>Forma</label><select id="mode"><option value="within">Forma 1 — mesmo concurso</option><option value="between">Forma 2 — concursos diferentes</option></select></div></div><div class="grid two" style="margin-top:10px"><div><label>Concurso principal</label><select id="contestA"></select></div><div><label id="otherLabel">Comparar com</label><select id="contestB"></select></div></div><div class="grid two" style="margin-top:10px"><div><label>Sorteio (Forma 2)</label><select id="draw"><option value="1">1º sorteio</option><option value="2">2º sorteio</option></select></div><div><label>Método exibido</label><select id="method"><option value="all">Todos os métodos</option><option value="m1">Método 1</option><option value="m2">Método 2</option><option value="m3">Método 3</option></select></div></div><p id="compareText" class="muted"></p></section>
 <section class="panel"><h2>2. Matriz de resultados</h2><div id="results"></div></section>
 <section class="panel"><h2>3. Cadastrar ou editar concurso</h2><div class="grid two"><div><label>Número do concurso</label><input id="contestNo" type="number" min="1" placeholder="Ex.: 3033"></div><div><label>Sorteio</label><select id="editDraw"><option value="1">1º sorteio</option><option value="2">2º sorteio</option></select></div></div><h3>Dezenas em ordem crescente</h3><div class="grid six" id="numberInputs"></div><p class="muted" id="rangeInfo"></p><div class="actions"><button id="save">Salvar sorteio</button><button class="secondary" id="load">Carregar para editar</button><button class="danger" id="delete">Excluir sorteio</button></div><p id="status" class="muted" role="status"></p></section>
-<section class="panel"><h2>4. Histórico e arquivos</h2><div class="actions"><button class="secondary" id="exportCsv">Exportar CSV</button><button class="secondary" id="exportJson">Backup JSON</button><button class="secondary" id="importBtn">Importar CSV/JSON</button></div><input type="file" id="file" accept=".csv,.json,text/csv,application/json" class="hidden"><p class="muted">CSV: loteria,concurso,sorteio,d1,d2,d3,d4,d5,d6. Dados são guardados neste navegador. Faça backups regulares.</p><div class="scroll"><table><thead><tr><th>Loteria</th><th>Concurso</th><th>Sorteio</th><th>Dezenas</th></tr></thead><tbody id="history"></tbody></table></div></section>
+<section class="panel"><h2>4. Histórico e arquivos</h2><div class="actions"><button class="secondary" id="exportCsv">Exportar CSV</button><button class="secondary" id="exportJson">Backup JSON</button><button class="secondary" id="importBtn">Importar CSV/JSON</button></div><input type="file" id="file" accept=".csv,.json,text/csv,application/json" class="hidden"><p class="muted">CSV: loteria,concurso,sorteio,d1…d15 (6 dezenas para Mega-Sena/Dupla Sena, 15 para Lotofácil). Dados são guardados neste navegador. Faça backups regulares.</p><div class="scroll"><table><thead><tr><th>Loteria</th><th>Concurso</th><th>Sorteio</th><th>Dezenas</th></tr></thead><tbody id="history"></tbody></table></div></section>
 <p class="footer">Ferramenta de análise matemática. Não prevê resultados nem aumenta as chances de ganhar.</p>
 </main>
 <script>
@@ -44,23 +44,24 @@ function options(el,vals,preferred){el.innerHTML="";for(const n of vals){const o
 function refreshSelectors(){
 const a=$("contestA").value,b=$("contestB").value,cs=contests();
 options($("contestA"),cs,a||cs[0]);options($("contestB"),cs,b||cs[1]||cs[0]);
-const mega=$("lottery").value==="mega";
-$("mode").disabled=mega;
-if(mega)$("mode").value="between";
-$("editDraw").value=mega?"1":$("editDraw").value;
-$("editDraw").disabled=mega;
-$("draw").disabled=mega||$("mode").value==="within";
-$("contestB").disabled=!mega&&$("mode").value==="within";
-$("otherLabel").textContent=(!mega&&$("mode").value==="within")?"Comparação interna (automática)":"Concurso de comparação";
-$("rangeInfo").textContent=`Permitido: 01 a ${mega?60:50}. Os somatórios podem ultrapassar esse limite.`;
-document.querySelectorAll(".number").forEach(i=>i.max=mega?60:50);
+const mega=$("lottery").value==="mega",lotofacil=$("lottery").value==="lotofacil";
+$("mode").disabled=mega||lotofacil;
+if(mega||lotofacil)$("mode").value="between";
+$("editDraw").value=(mega||lotofacil)?"1":$("editDraw").value;
+$("editDraw").disabled=mega||lotofacil;
+$("draw").disabled=mega||lotofacil||$("mode").value==="within";
+$("contestB").disabled=!(mega||lotofacil)&&$("mode").value==="within";
+$("otherLabel").textContent=(!(mega||lotofacil)&&$("mode").value==="within")?"Comparação interna (automática)":"Concurso de comparação";
+$("rangeInfo").textContent=`Permitido: 01 a ${lotofacil?25:mega?60:50}. ${lotofacil?"Informe 15 dezenas.":"Informe 6 dezenas."} Os somatórios podem ultrapassar esse limite.`;
+document.querySelectorAll(".number").forEach(i=>i.max=lotofacil?25:mega?60:50);
+ensureInputs(lotofacil?15:6);
 render();
 }
 function render(){
-const mega=$("lottery").value==="mega",within=!mega&&$("mode").value==="within";
-const a=Number($("contestA").value),b=Number($("contestB").value),draw=mega?1:Number($("draw").value);
+const mega=$("lottery").value==="mega",lotofacil=$("lottery").value==="lotofacil",within=!(mega||lotofacil)&&$("mode").value==="within";
+const a=Number($("contestA").value),b=Number($("contestB").value),draw=(mega||lotofacil)?1:Number($("draw").value);
 const r1=getRecord(a,within?1:draw),r2=getRecord(within?a:b,within?2:draw);
-$("compareText").textContent=within?`Concurso ${a}: 1º sorteio × 2º sorteio`:`${mega?"Mega-Sena":"Dupla Sena"}: concurso ${a} × concurso ${b}, ${draw}º sorteio`;
+$("compareText").textContent=within?`Concurso ${a}: 1º sorteio × 2º sorteio`:`${lotofacil?"Lotofácil":mega?"Mega-Sena":"Dupla Sena"}: concurso ${a} × concurso ${b}, ${draw}º sorteio`;
 if(!r1||!r2){$("results").innerHTML='<p class="note">Cadastre os dois sorteios necessários para calcular esta comparação.</p>';return}
 const method=$("method").value;
 const rows=r1.nums.map((x,i)=>calculate(x,r2.nums[i]));
@@ -93,14 +94,14 @@ function history(){
 $("history").replaceChildren();
 for(const r of [...records].sort((a,b)=>a.lottery.localeCompare(b.lottery)||b.contest-a.contest||a.draw-b.draw)){
 const tr=document.createElement("tr");
-for(const v of [r.lottery==="dupla"?"Dupla Sena":"Mega-Sena",r.contest,r.draw+"º",r.nums.map(pad).join(" · ")]){
+for(const v of [r.lottery==="dupla"?"Dupla Sena":r.lottery==="lotofacil"?"Lotofácil":"Mega-Sena",r.contest,r.draw+"º",r.nums.map(pad).join(" · ")]){
 const td=document.createElement("td");td.textContent=v;tr.append(td)}
 $("history").append(tr);
 }
 }
 function sync(){refreshSelectors();history()}
-function readInputs(){const nums=[...document.querySelectorAll(".number")].map(i=>Number(i.value));const max=$("lottery").value==="mega"?60:50;
-if(nums.some(n=>!Number.isInteger(n)||n<1||n>max)||new Set(nums).size!==6||nums.some((n,i)=>i>0&&n<=nums[i-1]))throw Error(`Digite seis dezenas distintas em ordem crescente, entre 01 e ${max}.`);
+function readInputs(){const nums=[...document.querySelectorAll(".number")].map(i=>Number(i.value));const lottery=$("lottery").value,max=lottery==="lotofacil"?25:lottery==="mega"?60:50,required=lottery==="lotofacil"?15:6;
+if(nums.length!==required||nums.some(n=>!Number.isInteger(n)||n<1||n>max)||new Set(nums).size!==required||nums.some((n,i)=>i>0&&n<=nums[i-1]))throw Error(`Digite ${required} dezenas distintas em ordem crescente, entre 01 e ${max}.`);
 return nums}
 function save(){
 try{const contest=Number($("contestNo").value),draw=Number($("editDraw").value),lottery=$("lottery").value;
@@ -116,18 +117,18 @@ function remove(){const contest=Number($("contestNo").value),draw=Number($("edit
 if(!confirm(`Excluir o sorteio ${draw} do concurso ${contest}?`))return;
 records=records.filter(r=>!(r.lottery===lottery&&r.contest===contest&&r.draw===draw));persist();sync();$("status").textContent="Sorteio excluído."}
 function download(filename,text,type){const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
-function exportCsv(){const rows=[["loteria","concurso","sorteio","d1","d2","d3","d4","d5","d6"],...records.map(r=>[r.lottery,r.contest,r.draw,...r.nums])];download("loto-fibonacci-concursos.csv","\ufeff"+rows.map(row=>row.join(",")).join("\r\n"),"text/csv;charset=utf-8")}
-function validRecord(r){if(!["dupla","mega"].includes(r.lottery)||!Number.isInteger(r.contest)||r.contest<1||!Number.isInteger(r.draw)||r.draw<1||r.draw>(r.lottery==="mega"?1:2)||!Array.isArray(r.nums)||r.nums.length!==6)return false;
-const max=r.lottery==="mega"?60:50;return r.nums.every((n,i)=>Number.isInteger(n)&&n>=1&&n<=max&&(i===0||n>r.nums[i-1]))}
+function exportCsv(){const rows=[["loteria","concurso","sorteio",...Array.from({length:15},(_,i)=>`d${i+1}`)],...records.map(r=>[r.lottery,r.contest,r.draw,...r.nums])];download("loto-fibonacci-concursos.csv","\ufeff"+rows.map(row=>row.join(",")).join("\r\n"),"text/csv;charset=utf-8")}
+function validRecord(r){if(!["dupla","mega","lotofacil"].includes(r.lottery)||!Number.isInteger(r.contest)||r.contest<1||!Number.isInteger(r.draw)||r.draw<1||r.draw>(r.lottery==="dupla"?2:1)||!Array.isArray(r.nums)||r.nums.length!==(r.lottery==="lotofacil"?15:6))return false;
+const max=r.lottery==="lotofacil"?25:r.lottery==="mega"?60:50;return r.nums.every((n,i)=>Number.isInteger(n)&&n>=1&&n<=max&&(i===0||n>r.nums[i-1]))}
 function importRecords(text,name){
 let incoming;
 if(name.toLowerCase().endsWith(".json"))incoming=JSON.parse(text);
-else {const lines=text.replace(/^\ufeff/,"").trim().split(/\r?\n/);incoming=lines.slice(1).filter(Boolean).map(line=>{const x=line.split(",");if(x.length!==9)throw Error("CSV inválido.");return {lottery:x[0].trim(),contest:Number(x[1]),draw:Number(x[2]),nums:x.slice(3).map(Number)}})}
+else {const lines=text.replace(/^\ufeff/,"").trim().split(/\r?\n/);incoming=lines.slice(1).filter(Boolean).map(line=>{const x=line.split(",");if(x.length<9||x.length>18)throw Error("CSV inválido.");return {lottery:x[0].trim(),contest:Number(x[1]),draw:Number(x[2]),nums:x.slice(3).filter(v=>v.trim()!=="").map(Number)}})}
 if(!Array.isArray(incoming)||!incoming.every(validRecord))throw Error("Arquivo contém registros inválidos. Verifique a estrutura e os limites.");
 for(const r of incoming){const idx=records.findIndex(x=>x.lottery===r.lottery&&x.contest===r.contest&&x.draw===r.draw);if(idx>=0)records[idx]=r;else records.push(r)}
 persist();sync();$("status").textContent=`Importados ${incoming.length} registros.`;
 }
-for(let i=0;i<6;i++){const el=document.createElement("input");el.type="number";el.className="number";el.min=1;el.max=50;el.placeholder=pad(i+1);el.setAttribute("aria-label",`Dezena ${i+1}`);$("numberInputs").append(el)}
+function ensureInputs(count){const holder=$("numberInputs");if(holder.children.length===count)return;holder.replaceChildren();holder.className="grid "+(count===15?"five":"six");for(let i=0;i<count;i++){const el=document.createElement("input");el.type="number";el.className="number";el.min=1;el.max=count===15?25:$("lottery").value==="mega"?60:50;el.placeholder=pad(i+1);el.setAttribute("aria-label",`Dezena ${i+1}`);holder.append(el)}}
 $("lottery").addEventListener("change",refreshSelectors);
 $("mode").addEventListener("change",refreshSelectors);
 for(const id of ["contestA","contestB","draw","method"])$(id).addEventListener("change",render);
@@ -136,6 +137,6 @@ $("exportCsv").addEventListener("click",exportCsv);
 $("exportJson").addEventListener("click",()=>download("loto-fibonacci-backup.json",JSON.stringify(records,null,2),"application/json"));
 $("importBtn").addEventListener("click",()=>$("file").click());
 $("file").addEventListener("change",async e=>{const file=e.target.files[0];if(!file)return;try{importRecords(await file.text(),file.name)}catch(err){$("status").textContent=err.message}e.target.value=""});
-sync();
+ensureInputs(6);sync();
 if("serviceWorker" in navigator && location.protocol!=="file:")navigator.serviceWorker.register("./sw.js").catch(()=>{});
 </script></body></html>
