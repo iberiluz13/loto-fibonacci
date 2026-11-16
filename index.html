@@ -56,6 +56,9 @@ if(mega||lotofacil)$("mode").value="between";
 $("editDraw").value=(mega||lotofacil)?"1":$("editDraw").value;
 $("editDraw").disabled=mega||lotofacil;
 $("draw").disabled=mega||lotofacil||$("mode").value==="within";
+const fourMatrices=!mega&&!lotofacil&&$("mode").value==="between";
+$("draw").parentElement.style.display=fourMatrices?"none":"";
+$("method").parentElement.style.display=fourMatrices?"none":"";
 $("contestB").disabled=!(mega||lotofacil)&&$("mode").value==="within";
 $("otherLabel").textContent=(!(mega||lotofacil)&&$("mode").value==="within")?"Comparação interna (automática)":"Concurso de comparação";
 $("rangeInfo").textContent=`Permitido: 01 a ${lotofacil?25:mega?60:50}. ${lotofacil?"Informe 15 dezenas.":"Informe 6 dezenas."} Os somatórios podem ultrapassar esse limite; a dezena final é reduzida pela sequência Fibonacci.`;
@@ -63,9 +66,46 @@ document.querySelectorAll(".number").forEach(i=>i.max=lotofacil?25:mega?60:50);
 ensureInputs(lotofacil?15:6);
 render();
 }
+function renderDuplaFourMatrices(a,b){
+const limit=50;
+const sections=[];
+for(const draw of [1,2]){
+  const left=getRecord(a,draw),right=getRecord(b,draw);
+  let html=`<h3>${draw}º sorteio × ${draw}º sorteio</h3>`;
+  if(!left||!right){
+    html+=`<p class="note">Cadastre o ${draw}º sorteio dos concursos ${a} e ${b} para mostrar os métodos 1 e 2.</p>`;
+    sections.push(html);continue;
+  }
+  const rows=left.nums.map((n,i)=>calculate(n,right.nums[i]));
+  for(const method of [1,2]){
+    html+=`<h3>Método ${method} — ${draw}º sorteio do concurso ${a} × ${draw}º sorteio do concurso ${b}</h3>`;
+    html+=`<div class="scroll"><table><thead><tr><th>Pos.</th><th>${a}</th><th>${b}</th><th>M${method}: cálculo/resíduo → dezena final</th></tr></thead><tbody>`;
+    for(let i=0;i<rows.length;i++){
+      const r=rows[i];
+      html+=`<tr><td>${i+1}</td><td>${pad(r.a)}</td><td>${pad(r.b)}</td><td><b>${method===1?result(r.sum1,r.res1,limit):result(r.sum2,r.res2,limit)}</b></td></tr>`;
+    }
+    html+='</tbody></table></div>';
+  }
+  html+='<h3>Memória dos cálculos por posição</h3>';
+  for(let i=0;i<rows.length;i++){
+    const r=rows[i];
+    html+=`<details style="border-bottom:1px solid #e1e7ef;padding:10px 0"><summary><b>${draw}º sorteio · Posição ${i+1}</b> · ${pad(r.a)} × ${pad(r.b)}</summary>
+<p class="muted">Maior ${pad(r.hi)} − menor ${pad(r.lo)} = ${pad(r.diff)}<br>Fibonacci acima do menor: ${r.fLo} − ${r.lo} = R1 ${pad(r.r1)}<br>Fibonacci acima da diferença: ${r.fDiff} − ${r.diff} = R2 ${pad(r.r2)}</p>
+<p><b>M1:</b> ${r.lo} + ${r.hi} + ${r.diff} + ${r.r1} + ${r.r2} = ${r.sum1}; ${r.fSum1} − ${r.sum1} = ${r.res1} → <b>${result(r.sum1,r.res1,limit)}</b><br>${reductionDetails(r.res1,limit)}</p>
+<p><b>M2:</b> ${r.lo} + ${r.diff} + ${r.r1} + ${r.r2} = ${r.sum2}; ${r.fSum2} − ${r.sum2} = ${r.res2} → <b>${result(r.sum2,r.res2,limit)}</b><br>${reductionDetails(r.res2,limit)}</p></details>`;
+  }
+  sections.push(html);
+}
+$("compareText").textContent=`Dupla Sena: concursos ${a} × ${b}, 1º sorteio com 1º sorteio e 2º sorteio com 2º sorteio — quatro matrizes (M1 e M2).`;
+$("results").innerHTML=`<p class="note">Quatro matrizes: M1 e M2 de cada sorteio. Dezena final com limite 50, mantendo a redução Fibonacci original.</p>${sections.join('<div class="line"></div>')}`;
+}
 function render(){
 const mega=$("lottery").value==="mega",lotofacil=$("lottery").value==="lotofacil",within=!(mega||lotofacil)&&$("mode").value==="within";
 const a=Number($("contestA").value),b=Number($("contestB").value),draw=(mega||lotofacil)?1:Number($("draw").value);
+if(!mega&&!lotofacil&&!within){
+  renderDuplaFourMatrices(a,b);
+  return;
+}
 const r1=getRecord(a,within?1:draw),r2=getRecord(within?a:b,within?2:draw);
 $("compareText").textContent=within?`Concurso ${a}: 1º sorteio × 2º sorteio`:`${lotofacil?"Lotofácil":mega?"Mega-Sena":"Dupla Sena"}: concurso ${a} × concurso ${b}, ${draw}º sorteio`;
 if(!r1||!r2){$("results").innerHTML='<p class="note">Cadastre os dois sorteios necessários para calcular esta comparação.</p>';return}

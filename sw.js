@@ -1,5 +1,5 @@
-/* Loto Fibonacci - atualizacao de cache v4 */
-const CACHE = 'loto-fibonacci-v4';
+/* Loto Fibonacci - atualizacao de cache v5 */
+const CACHE = 'loto-fibonacci-v5';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon.svg'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)));
