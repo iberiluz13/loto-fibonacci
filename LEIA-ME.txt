@@ -7,3 +7,5 @@ Os dados ficam no armazenamento do navegador. Faça backup JSON ou CSV regularme
 A importação disponível nesta versão é CSV/JSON, não XLSX diretamente. Para usar a planilha Excel, exporte seus concursos no formato CSV com as colunas loteria,concurso,sorteio,d1,d2,d3,d4,d5,d6.
 
 O aplicativo é uma ferramenta de análise matemática, não de previsão de sorteios.
+
+VERSÃO 2: Lotofácil, 15 dezenas de 01 a 25, comparação de concursos com os três métodos. Substitua index.html e sw.js no GitHub.

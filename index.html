@@ -35,7 +35,13 @@ const fSum1=fibAbove(sum1),fSum2=fibAbove(sum2),res1=fSum1-sum1,res2=fSum2-sum2;
 return {a,b,lo,hi,diff,fLo,r1,fDiff,r2,sum1,fSum1,res1,sum2,fSum2,res2,
 crossSum:Math.abs(sum1-sum2),crossRes:Math.abs(res1-res2)};
 }
-function result(sum,res){return `${pad(sum)}/${pad(res)}`}
+function reduceToLimit(value,limit){
+  const steps=[];let current=value;
+  while(current>limit){const next=fibAbove(current);steps.push(`${next} − ${current} = ${next-current}`);current=next-current;}
+  return {value:current,steps};
+}
+function result(sum,res,limit){const final=reduceToLimit(res,limit).value;return `${pad(sum)}/${pad(res)} <small style="color:#176b42">→ ${pad(final)}</small>`}
+function reductionDetails(res,limit){const out=reduceToLimit(res,limit);return out.steps.length?`${out.steps.join(' → ')}; dezena final <b>${pad(out.value)}</b>`:`Dezena final <b>${pad(out.value)}</b> (dentro do limite ${limit})`; }
 function persist(){localStorage.setItem(KEY,JSON.stringify(records))}
 function byLottery(){return records.filter(r=>r.lottery===$("lottery").value)}
 function contests(){return [...new Set(byLottery().map(r=>r.contest))].sort((a,b)=>b-a)}
@@ -52,7 +58,7 @@ $("editDraw").disabled=mega||lotofacil;
 $("draw").disabled=mega||lotofacil||$("mode").value==="within";
 $("contestB").disabled=!(mega||lotofacil)&&$("mode").value==="within";
 $("otherLabel").textContent=(!(mega||lotofacil)&&$("mode").value==="within")?"Comparação interna (automática)":"Concurso de comparação";
-$("rangeInfo").textContent=`Permitido: 01 a ${lotofacil?25:mega?60:50}. ${lotofacil?"Informe 15 dezenas.":"Informe 6 dezenas."} Os somatórios podem ultrapassar esse limite.`;
+$("rangeInfo").textContent=`Permitido: 01 a ${lotofacil?25:mega?60:50}. ${lotofacil?"Informe 15 dezenas.":"Informe 6 dezenas."} Os somatórios podem ultrapassar esse limite; a dezena final é reduzida pela sequência Fibonacci.`;
 document.querySelectorAll(".number").forEach(i=>i.max=lotofacil?25:mega?60:50);
 ensureInputs(lotofacil?15:6);
 render();
@@ -64,18 +70,19 @@ const r1=getRecord(a,within?1:draw),r2=getRecord(within?a:b,within?2:draw);
 $("compareText").textContent=within?`Concurso ${a}: 1º sorteio × 2º sorteio`:`${lotofacil?"Lotofácil":mega?"Mega-Sena":"Dupla Sena"}: concurso ${a} × concurso ${b}, ${draw}º sorteio`;
 if(!r1||!r2){$("results").innerHTML='<p class="note">Cadastre os dois sorteios necessários para calcular esta comparação.</p>';return}
 const method=$("method").value;
+const limit=lotofacil?25:mega?60:50;
 const rows=r1.nums.map((x,i)=>calculate(x,r2.nums[i]));
 let head="<tr><th>Pos.</th><th>A</th><th>B</th>";
 if(method==="all"||method==="m1")head+="<th>M1</th>";
 if(method==="all"||method==="m2")head+="<th>M2</th>";
 if(method==="all"||method==="m3")head+="<th>M3</th>";
 head+="</tr>";
-let html=`<div class="scroll"><table><thead>${head}</thead><tbody>`;
+let html=`<p class="note">Cada célula mostra cálculo/resíduo → dezena final (limite ${limit}). Se o resíduo ultrapassar o limite, repetimos a busca pelo próximo Fibonacci.</p><div class="scroll"><table><thead>${head}</thead><tbody>`;
 for(let i=0;i<rows.length;i++){
 const r=rows[i];html+=`<tr><td>${i+1}</td><td>${pad(r.a)}</td><td>${pad(r.b)}</td>`;
-if(method==="all"||method==="m1")html+=`<td><b>${result(r.sum1,r.res1)}</b></td>`;
-if(method==="all"||method==="m2")html+=`<td><b>${result(r.sum2,r.res2)}</b></td>`;
-if(method==="all"||method==="m3")html+=`<td><b>${result(r.crossSum,r.crossRes)}</b></td>`;
+if(method==="all"||method==="m1")html+=`<td><b>${result(r.sum1,r.res1,limit)}</b></td>`;
+if(method==="all"||method==="m2")html+=`<td><b>${result(r.sum2,r.res2,limit)}</b></td>`;
+if(method==="all"||method==="m3")html+=`<td><b>${result(r.crossSum,r.crossRes,limit)}</b></td>`;
 html+="</tr>";
 }html+="</tbody></table></div><h3>Memória dos cálculos por posição</h3>";
 for(let i=0;i<rows.length;i++){
@@ -84,9 +91,9 @@ html+=`<details style="border-bottom:1px solid #e1e7ef;padding:10px 0"><summary>
 <p class="muted">Maior ${pad(r.hi)} − menor ${pad(r.lo)} = ${pad(r.diff)}<br>
 Fibonacci acima do menor: ${r.fLo} − ${r.lo} = R1 ${pad(r.r1)}<br>
 Fibonacci acima da diferença: ${r.fDiff} − ${r.diff} = R2 ${pad(r.r2)}</p>
-<p><b>M1:</b> ${r.lo} + ${r.hi} + ${r.diff} + ${r.r1} + ${r.r2} = ${r.sum1}; ${r.fSum1} − ${r.sum1} = ${r.res1} → <b>${result(r.sum1,r.res1)}</b></p>
-<p><b>M2:</b> ${r.lo} + ${r.diff} + ${r.r1} + ${r.r2} = ${r.sum2}; ${r.fSum2} − ${r.sum2} = ${r.res2} → <b>${result(r.sum2,r.res2)}</b></p>
-<p><b>M3:</b> |${r.sum1} − ${r.sum2}| = ${r.crossSum}; |${r.res1} − ${r.res2}| = ${r.crossRes} → <b>${result(r.crossSum,r.crossRes)}</b></p></details>`;
+<p><b>M1:</b> ${r.lo} + ${r.hi} + ${r.diff} + ${r.r1} + ${r.r2} = ${r.sum1}; ${r.fSum1} − ${r.sum1} = ${r.res1} → <b>${result(r.sum1,r.res1,limit)}</b><br>${reductionDetails(r.res1,limit)}</p>
+<p><b>M2:</b> ${r.lo} + ${r.diff} + ${r.r1} + ${r.r2} = ${r.sum2}; ${r.fSum2} − ${r.sum2} = ${r.res2} → <b>${result(r.sum2,r.res2,limit)}</b><br>${reductionDetails(r.res2,limit)}</p>
+<p><b>M3:</b> |${r.sum1} − ${r.sum2}| = ${r.crossSum}; |${r.res1} − ${r.res2}| = ${r.crossRes} → <b>${result(r.crossSum,r.crossRes,limit)}</b><br>${reductionDetails(r.crossRes,limit)}</p></details>`;
 }
 $("results").innerHTML=html;
 }
